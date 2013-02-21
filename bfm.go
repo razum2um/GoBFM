@@ -1,6 +1,7 @@
 package main
 
 import (
+    "os"
     "fmt"
     "flag"
     "time"
@@ -99,11 +100,10 @@ func main() {
     }
     spew.Dump(v)
 
-    t := v.Itineraries[0].PricingInfo.Price.Amount
-    fmt.Println("XMLName %v", t)
-    json, jerr := json.Marshal(t)
+    fmt.Println("XMLName %v", v)
+    json, jerr := json.Marshal(v)
     if jerr != nil {
         fmt.Println("error:", err)
     }
-    fmt.Println(json)
+    os.Stdout.Write(json)
 }
