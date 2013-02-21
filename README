@@ -1,0 +1,14 @@
+1) Установить GVM
+bash < <(curl -s https://raw.github.com/moovweb/gvm/master/binscripts/gvm-installer)
+
+2) Установить Go-1.0.3
+gvm install go1
+gvm use go1
+
+3) Выполнить устновку модулей из папки
+./install.sh
+
+4) Запустить вебсервер ./run.sh
+
+5) Можно пробовать доблиться curl`ом
+time curl http://127.0.0.1:9000/bfm/ --data @bfm100.xml
