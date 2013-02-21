@@ -1,39 +1,60 @@
-1) Установить GVM
-bash < <(curl -s https://raw.github.com/moovweb/gvm/master/binscripts/gvm-installer)
+1) Install GVM
+	bash < <(curl -s https://raw.github.com/moovweb/gvm/master/binscripts/gvm-installer)
 
-2) Установить Go-1.0.3
-gvm install go1
-gvm use go1
+2) Install Go-1.0.3
+	gvm install go1
+	gvm use go1
 
-3) Выполнить устновку модулей из папки
-./install.sh
+3) Setup envorinment
+	./install.sh
 
-4) Запустить вебсервер ./run.sh
+4) Launch webserver
+	./run.sh
 
-5) Можно пробовать доблиться curl`ом
-time curl http://127.0.0.1:9000/bfm/ --data @bfm100.xml
+5) Now let's curl!
+	time curl http://127.0.0.1:9000/bfm/ --data @bfm100.xml
 
-На моем ноутбуке результаты:
+My ASUS K43E:
 
-```bash
-	razum2um@asus ~/RubymineProjects/GoBFM $ time curl http://127.0.0.1:9000/bfm/ --data @bfm.xml &> /dev/null
+```
+razum2um@asus ~/RubymineProjects/GoBFM $ time curl http://127.0.0.1:9000/bfm/ --data @bfm.xml &> /dev/null
 
-	real0m0.028s
-	user0m0.005s
-	sys0m0.005s
+real0m0.028s
+user0m0.005s
+sys0m0.005s
+razum2um@asus ~/RubymineProjects/GoBFM $ time curl 	http://127.0.0.1:9000/bfm/ --data @bfm50.xml &> /dev/null
 
-	razum2um@asus ~/RubymineProjects/GoBFM $ time curl 	http://127.0.0.1:9000/bfm/ --data @bfm50.xml &> /dev/null
-	real0m0.148s
-	user0m0.011s
-	sys0m0.003s
+real0m0.148s
+user0m0.011s
+sys0m0.003s
+razum2um@asus ~/RubymineProjects/GoBFM $ time curl http://127.0.0.1:9000/bfm/ --data @bfm100.xml &> /dev/null
 
-	razum2um@asus ~/RubymineProjects/GoBFM $ time curl http://127.0.0.1:9000/bfm/ --data @bfm100.xml &> /dev/null
-	real0m0.281s
-	user0m0.018s
-	sys0m0.004s
+real0m0.281s
+user0m0.018s
+sys0m0.004s
+razum2um@asus ~/RubymineProjects/GoBFM $ time curl http://127.003s.0.1:9000/bfm/ --data @bfm200.xml &> /dev/null
 
-	razum2um@asus ~/RubymineProjects/GoBFM $ time curl http://127.003s.0.1:9000/bfm/ --data @bfm200.xml &> /dev/null
-	real0m0.537s
-	user0m0.537s016s
-	sys0m0.007s
+real0m0.537s
+user0m0.537s016s
+sys0m0.007s
+razum2um@asus ~/RubymineProjects/GoBFM $ time curl http://127.0.0.1:9000/bfm/ --data @bfm.xml &> /dev/null
+
+real0m0.028s
+user0m0.005s
+sys0m0.005s
+
+razum2um@asus ~/RubymineProjects/GoBFM $ time curl 	http://127.0.0.1:9000/bfm/ --data @bfm50.xml &> /dev/null
+real0m0.148s
+user0m0.011s
+sys0m0.003s
+
+razum2um@asus ~/RubymineProjects/GoBFM $ time curl http://127.0.0.1:9000/bfm/ --data @bfm100.xml &> /dev/null
+real0m0.281s
+user0m0.018s
+sys0m0.004s
+
+razum2um@asus ~/RubymineProjects/GoBFM $ time curl http://127.003s.0.1:9000/bfm/ --data @bfm200.xml &> /dev/null
+real0m0.537s
+user0m0.537s016s
+sys0m0.007s
 ```
