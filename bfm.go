@@ -8,40 +8,79 @@ import (
     "github.com/davecgh/go-spew/spew"
 )
 
-type Email struct {
-    Where string `xml:"where,attr"`
-    Addr  string
+// XML types
+
+type Airport struct {
+    Name string `xml:"LocationCode,attr"`
 }
-type Address struct {
-    City, State string
+
+type Airline struct {
+    Code string `xml:",attr"`
 }
-type Result struct {
-    XMLName xml.Name `xml:"Person"`
-    Name    string   `xml:"FullName"`
-    Phone   string
-    Email   []Email
-    Groups  []string `xml:"Group>Value"`
-    Address
+
+type Equipment struct {
+    Equip string `xml:"AirEquipType,attr"`
+}
+
+type Eticket struct {
+    Eticket string `xml:"Ind,attr"`
+}
+
+type Timezone struct {
+    Offset  int `xml:"GMTOffset,attr"`
+}
+
+type Flight struct {
+    XMLName             xml.Name `xml:"FlightSegment"`
+    StartDt             string   `xml:"DepartureDateTime,attr"`
+    EndDt               string   `xml:"ArrivalDateTime,attr"`
+    DestanationTimezone Timezone `xml:"DepartureTimeZone"`
+    OriginTimezone      Timezone `xml:"ArrivalTimeZone"`
+    ElapsedTime         int      `xml:"ElapsedTime,attr"`
+    Eticket             Eticket  `xml:"TPA_Extensions/eTicket"`
+    Cls                 string   `xml:"ResBookDesigCode,attr"`
+    Number              int      `xml:"FlightNumber,attr"`
+    Equipment           Equipment
+    OperatingAirline    Airline  `xml:"OperatingAirline"`
+    MarketingAirline    Airline  `xml:"MarketingAirline"`
+    Origin              Airport  `xml:"DepartureAirport"`
+    Destination         Airport  `xml:"ArrivalAirport"`
+}
+
+type Route struct {
+    Flights []Flight `xml:"FlightSegment"`
+}
+
+type FlightInfo struct {
+    XMLName         xml.Name    `xml:"AirItinerary"`
+    DirectionType   string      `xml:"DirectionInd,attr"`
+    Routes          []Route     `xml:"OriginDestinationOptions>OriginDestinationOption"`
 }
 
 type Price struct {
     XMLName xml.Name `xml:"TotalFare"`
-
     Amount   string `xml:"Amount,attr"`
     Currency string `xml:"CurrencyCode,attr"`
 }
 
+type PricingInfo struct {
+    XMLName xml.Name `xml:"AirItineraryPricingInfo"`
+    Price Price `xml:"ItinTotalFare>TotalFare"`
+    LastTicketingDate string `xml:"LastTicketDate,attr"`
+}
+
 type BfmItinerary struct {
     XMLName xml.Name `xml:"PricedItinerary"`
-
-    Price   Price `xml:"AirItineraryPricingInfo>ItinTotalFare>TotalFare"`
+    PricingInfo     PricingInfo
+    FlightInfo      FlightInfo
 }
 
 type Response struct {
     XMLName     xml.Name `xml:"OTA_AirLowFareSearchRS"`
-
     Itineraries []BfmItinerary `xml:"PricedItineraries>PricedItinerary"`
 }
+
+// end of XML types
 
 var xmlFileName = flag.String("file", "bfm.xml", "Input file path")
 
