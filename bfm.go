@@ -2,6 +2,8 @@ package main
 
 import (
     "fmt"
+    "flag"
+    "io/ioutil"
     "encoding/xml"
     "github.com/davecgh/go-spew/spew"
 )
@@ -24,9 +26,6 @@ type Result struct {
 
 type Price struct {
     XMLName xml.Name `xml:"TotalFare"`
-    //Body    string `xml:",innerxml"`
-    //Data    string `xml:",chardata"`
-    //Any     string `xml:",any"`
 
     Amount   string `xml:"Amount,attr"`
     Currency string `xml:"CurrencyCode,attr"`
@@ -34,60 +33,31 @@ type Price struct {
 
 type BfmItinerary struct {
     XMLName xml.Name `xml:"PricedItinerary"`
-    //Body    string `xml:",innerxml"`
-    //Data    string `xml:",chardata"`
-    //Any     string `xml:",any"`
 
-    Price Price `xml:"AirItineraryPricingInfo>ItinTotalFare>TotalFare"`
+    Price   Price `xml:"AirItineraryPricingInfo>ItinTotalFare>TotalFare"`
 }
 
+type Response struct {
+    XMLName     xml.Name `xml:"OTA_AirLowFareSearchRS"`
+
+    Itineraries []BfmItinerary `xml:"PricedItineraries>PricedItinerary"`
+}
+
+var xmlFileName = flag.String("file", "bfm.xml", "Input file path")
+
 func main() {
-    v := BfmItinerary{}
+    flag.Parse()
+    v := Response{}
 
-    data := `
-        <PricedItinerary SequenceNumber="1" MultipleTickets="false">
-          <AirItinerary DirectionInd="Return">
-            <OriginDestinationOptions>
-               <FlightSegment></FlightSegment>
-               <FlightSegment></FlightSegment>
-            </OriginDestinationOptions>
-            <OriginDestinationOptions>
-               <FlightSegment></FlightSegment>
-               <FlightSegment></FlightSegment>
-            </OriginDestinationOptions>
-          </AirItinerary>
-          <AirItineraryPricingInfo>
-            <ItinTotalFare>
-              <BaseFare Amount="2.00" CurrencyCode="EUR"/>
-              <EquivFare Amount="85" CurrencyCode="RUB"/>
-              <Taxes>
-                <Tax TaxCode="TOTALTAX" Amount="8164" CurrencyCode="RUB"/>
-              </Taxes>
-              <TotalFare Amount="8249" CurrencyCode="RUB"/>
-            </ItinTotalFare>
-          </AirItineraryPricingInfo>
-        </PricedItinerary>
-
-        <Person>
-            <FullName>Grace R. Emlin</FullName>
-            <Company>Example Inc.</Company>
-            <Email where="home">
-                <Addr>gre@example.com</Addr>
-            </Email>
-            <Email where='work'>
-                <Addr>gre@work.com</Addr>
-            </Email>
-            <Group>
-                <Value>Friends</Value>
-                <Value>Squash</Value>
-            </Group>
-            <City>Hanga Roa</City>
-            <State>Easter Island</State>
-        </Person>
-    `
-    err := xml.Unmarshal([]byte(data), &v)
+    content, err := ioutil.ReadFile(*xmlFileName)
     if err != nil {
-        fmt.Printf("error: %v", err)
+        fmt.Println("Error opening file: %v\n", err)
+        return
+    }
+
+    err = xml.Unmarshal([]byte(content), &v)
+    if err != nil {
+        fmt.Printf("Error parsing file: %v\n", err)
         return
     }
     spew.Dump(v)
