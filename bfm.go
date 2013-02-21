@@ -3,6 +3,7 @@ package main
 import (
     "fmt"
     "flag"
+    "time"
     "io/ioutil"
     "encoding/xml"
     "github.com/davecgh/go-spew/spew"
@@ -18,33 +19,29 @@ type Airline struct {
     Code string `xml:",attr"`
 }
 
-type Equipment struct {
-    Equip string `xml:"AirEquipType,attr"`
-}
-
-type Eticket struct {
-    Eticket string `xml:"Ind,attr"`
-}
-
 type Timezone struct {
     Offset  int `xml:"GMTOffset,attr"`
 }
 
 type Flight struct {
-    XMLName             xml.Name `xml:"FlightSegment"`
-    StartDt             string   `xml:"DepartureDateTime,attr"`
-    EndDt               string   `xml:"ArrivalDateTime,attr"`
-    DestanationTimezone Timezone `xml:"DepartureTimeZone"`
-    OriginTimezone      Timezone `xml:"ArrivalTimeZone"`
-    ElapsedTime         int      `xml:"ElapsedTime,attr"`
-    Eticket             Eticket  `xml:"TPA_Extensions/eTicket"`
-    Cls                 string   `xml:"ResBookDesigCode,attr"`
-    Number              int      `xml:"FlightNumber,attr"`
-    Equipment           Equipment
-    OperatingAirline    Airline  `xml:"OperatingAirline"`
-    MarketingAirline    Airline  `xml:"MarketingAirline"`
-    Origin              Airport  `xml:"DepartureAirport"`
-    Destination         Airport  `xml:"ArrivalAirport"`
+    XMLName             xml.Name  `xml:"FlightSegment"`
+    StartDt             time.Time `xml:"DepartureDateTime,attr"`
+    EndDt               time.Time `xml:"ArrivalDateTime,attr"`
+    DestanationTimezone Timezone  `xml:"DepartureTimeZone"`
+    OriginTimezone      Timezone  `xml:"ArrivalTimeZone"`
+    ElapsedTime         int       `xml:"ElapsedTime,attr"`
+    Eticket             struct {
+        Ind      string    `xml:"Ind,attr"`
+    }                             `xml:"TPA_Extensions>eTicket"`
+    Cls                 string    `xml:"ResBookDesigCode,attr"`
+    Number              int       `xml:"FlightNumber,attr"`
+    Equipment           struct {
+        Equip string `xml:"AirEquipType,attr"`
+    }
+    OperatingAirline    Airline   `xml:"OperatingAirline"`
+    MarketingAirline    Airline   `xml:"MarketingAirline"`
+    Origin              Airport   `xml:"DepartureAirport"`
+    Destination         Airport   `xml:"ArrivalAirport"`
 }
 
 type Route struct {
@@ -82,7 +79,7 @@ type Response struct {
 
 // end of XML types
 
-var xmlFileName = flag.String("file", "bfm.xml", "Input file path")
+var xmlFileName = flag.String("file", "bfm200.xml", "Input file path")
 
 func main() {
     flag.Parse()
