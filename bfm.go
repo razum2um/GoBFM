@@ -70,8 +70,71 @@ type PricingInfo struct {
 
 type BfmItinerary struct {
     XMLName xml.Name `xml:"PricedItinerary"`
-    PricingInfo     PricingInfo
-    FlightInfo      FlightInfo
+    PricingInfo     PricingInfo     `xml:"AirItineraryPricingInfo"`
+    FlightInfo      FlightInfo      `xml:"AirItinerary"`
+}
+
+// see: http://stackoverflow.com/questions/11126793/golang-json-and-dealing-with-unexported-fields
+func (a Airport) MarshalJSON() ([]byte, error) {
+    return json.Marshal(struct{
+        Name string `json:"name"`
+    }{
+        Name: a.Name,
+    })
+}
+
+func (f Flight) MarshalJSON() ([]byte, error) {
+    return json.Marshal(struct{
+        StartDt time.Time `json:"start_dt"`
+        EndDt time.Time `json:"end_dt"`
+        DestanationTimezone int `json:"destination_timezone"`
+        OriginTimezone int `json:"origin_timezone"`
+        ElapsedTime int `json:"elapsed_time"`
+        Eticket bool `json:"eticket"`
+        Cls string `json:"cls"`
+        Number int `json:"number"`
+        Equipment string `json:"equipment"`
+        OperatingAirline string `json:"operating_airline"`
+        MarketingAirline string `json:"marketing_airline"`
+        Origin Airport `json:"origin"`
+        Destination Airport `json:"destination"`
+    }{
+        StartDt: f.StartDt,
+        EndDt: f.EndDt,
+        DestanationTimezone: f.DestanationTimezone.Offset,
+        OriginTimezone: f.OriginTimezone.Offset,
+        ElapsedTime: f.ElapsedTime,
+        Eticket: f.Eticket.Ind == "true",
+        Cls: f.Cls,
+        Number: f.Number,
+        Equipment: f.Equipment.Equip,
+        OperatingAirline: f.OperatingAirline.Code,
+        MarketingAirline: f.MarketingAirline.Code,
+        Origin: f.Origin,
+        Destination: f.Destination,
+    })
+}
+
+func (r Route) MarshalJSON() ([]byte, error) {
+    return json.Marshal(struct{
+        Flights []Flight `json:"flights"`
+    }{
+        Flights: r.Flights,
+    })
+}
+
+func (i BfmItinerary) MarshalJSON() ([]byte, error) {
+    return json.Marshal(struct{
+        Price string `json:"price"`
+        LastTicketingDate string `json:"last_tiketing_date"`
+        DirectionType string `json:"direction_type"`
+        Routes []Route `json:"routes"`
+    }{
+        Price: i.PricingInfo.Price.Amount,
+        LastTicketingDate: i.PricingInfo.LastTicketingDate,
+        DirectionType: i.FlightInfo.DirectionType,
+        Routes: i.FlightInfo.Routes,
+    })
 }
 
 type Response struct {
@@ -98,10 +161,9 @@ func main() {
         fmt.Printf("Error parsing file: %v\n", err)
         return
     }
-    spew.Dump(v)
+    spew.Dump(v.Itineraries[0])
 
-    fmt.Println("XMLName %v", v)
-    json, jerr := json.Marshal(v)
+    json, jerr := json.Marshal(v.Itineraries)
     if jerr != nil {
         fmt.Println("error:", err)
     }
