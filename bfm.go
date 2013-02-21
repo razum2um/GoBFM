@@ -1,113 +1,69 @@
 package main
 
-// An example streaming XML parser.
-
 import (
-	"bufio"
-	"fmt"
-	"os"
-	"flag"
-	"encoding/xml"
-	"strings"
-	"regexp"
-	"net/url"
+    "fmt"
+    "encoding/xml"
 )
 
-var inputFile = flag.String("infile", "enwiki-latest-pages-articles.xml", "Input file path")
-var indexFile = flag.String("indexfile", "out/article_list.txt", "article list output file")
-
-var filter, _ = regexp.Compile("^file:.*|^talk:.*|^special:.*|^wikipedia:.*|^wiktionary:.*|^user:.*|^user_talk:.*")
-
-// Here is an example article from the Wikipedia XML dump
-//
-// <page>
-// 	<title>Apollo 11</title>
-//      <redirect title="Foo bar" />
-// 	...
-// 	<revision>
-// 	...
-// 	  <text xml:space="preserve">
-// 	  {{Infobox Space mission
-// 	  |mission_name=&lt;!--See above--&gt;
-// 	  |insignia=Apollo_11_insignia.png
-// 	...
-// 	  </text>
-// 	</revision>
-// </page>
-//
-// Note how the tags on the fields of Page and Redirect below
-// describe the XML schema structure.
-
-type Redirect struct {
-	Title string `xml:"title,attr"`
+type Email struct {
+    Where string `xml:"where,attr"`
+    Addr  string
 }
-
-type Page struct {
-	Title string `xml:"title"`
-	Redir Redirect `xml:"redirect"`
-	Text string `xml:"revision>text"`
+type Address struct {
+    City, State string
 }
-
-func CanonicalizeTitle(title string) string {
-	can := strings.ToLower(title)
-	can = strings.Replace(can, " ", "_", -1)
-	can = url.QueryEscape(can)
-	return can
-}
-
-func WritePage(title string, text string) {
-	outFile, err := os.Create("out/docs/" + title)
-	if err == nil {
-		writer := bufio.NewWriter(outFile)
-		defer outFile.Close()
-		writer.WriteString(text)
-		writer.Flush()
-	}
+type Result struct {
+    XMLName xml.Name `xml:"Person"`
+    Name    string   `xml:"FullName"`
+    Phone   string
+    Email   []Email
+    Groups  []string `xml:"Group>Value"`
+    Address
 }
 
 func main() {
-	flag.Parse()
+    v := Result{Name: "none", Phone: "none"}
 
-	xmlFile, err := os.Open(*inputFile)
-	if err != nil {
-		fmt.Println("Error opening file:", err)
-		return
-	}
-	defer xmlFile.Close()
+    data := `
+        <PricedItinerary SequenceNumber="1" MultipleTickets="false">
+         <AirItinerary DirectionInd="Return">
+           <OriginDestinationOptions>
+              <FlightSegment></FlightSegment>
+              <FlightSegment></FlightSegment>
+           </OriginDestinationOptions>
+           <OriginDestinationOptions>
+              <FlightSegment></FlightSegment>
+              <FlightSegment></FlightSegment>
+           </OriginDestinationOptions>
+         </AirItinerary DirectionInd="Return">
+        </PricedItinerary SequenceNumber="1" MultipleTickets="false">
 
-	decoder := xml.NewDecoder(xmlFile)
-	total := 0
-	var inElement string
-	for {
-		// Read tokens from the XML document in a stream.
-		t, _ := decoder.Token()
-		if t == nil {
-			break
-		}
-		// Inspect the type of the token just read.
-		switch se := t.(type) {
-		case xml.StartElement:
-			// If we just read a StartElement token
-			inElement = se.Name.Local
-			// ...and its name is "page"
-			if inElement == "page" {
-				var p Page
-				// decode a whole chunk of following XML into the
-				// variable p which is a Page (se above)
-				decoder.DecodeElement(&p, &se)
-
-				// Do some stuff with the page.
-				p.Title = CanonicalizeTitle(p.Title)
-				m := filter.MatchString(p.Title)
-				if !m && p.Redir.Title == "" {
-					WritePage(p.Title, p.Text)
-					total++
-				}
-			}
-		default:
-		}
-
-	}
-
-	fmt.Printf("Total articles: %d \n", total)
+        <Person>
+            <FullName>Grace R. Emlin</FullName>
+            <Company>Example Inc.</Company>
+            <Email where="home">
+                <Addr>gre@example.com</Addr>
+            </Email>
+            <Email where='work'>
+                <Addr>gre@work.com</Addr>
+            </Email>
+            <Group>
+                <Value>Friends</Value>
+                <Value>Squash</Value>
+            </Group>
+            <City>Hanga Roa</City>
+            <State>Easter Island</State>
+        </Person>
+    `
+    err := xml.Unmarshal([]byte(data), &v)
+    if err != nil {
+        fmt.Printf("error: %v", err)
+        return
+    }
+    fmt.Printf("XMLName: %#v\n", v.XMLName)
+    fmt.Printf("Name: %q\n", v.Name)
+    fmt.Printf("Phone: %q\n", v.Phone)
+    fmt.Printf("Email: %v\n", v.Email)
+    fmt.Printf("Groups: %v\n", v.Groups)
+    fmt.Printf("Address: %v\n", v.Address)
 }
