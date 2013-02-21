@@ -21,22 +21,51 @@ type Result struct {
     Address
 }
 
+type Price struct {
+    XMLName xml.Name `xml:"TotalFare"`
+    //Body    string `xml:",innerxml"`
+    //Data    string `xml:",chardata"`
+    //Any     string `xml:",any"`
+
+    Amount   string `xml:"Amount,attr"`
+    Currency string `xml:"CurrencyCode,attr"`
+}
+
+type BfmItinerary struct {
+    XMLName xml.Name `xml:"PricedItinerary"`
+    //Body    string `xml:",innerxml"`
+    //Data    string `xml:",chardata"`
+    //Any     string `xml:",any"`
+
+    Price Price `xml:"AirItineraryPricingInfo>ItinTotalFare>TotalFare"`
+}
+
 func main() {
-    v := Result{Name: "none", Phone: "none"}
+    v := BfmItinerary{}
 
     data := `
         <PricedItinerary SequenceNumber="1" MultipleTickets="false">
-         <AirItinerary DirectionInd="Return">
-           <OriginDestinationOptions>
-              <FlightSegment></FlightSegment>
-              <FlightSegment></FlightSegment>
-           </OriginDestinationOptions>
-           <OriginDestinationOptions>
-              <FlightSegment></FlightSegment>
-              <FlightSegment></FlightSegment>
-           </OriginDestinationOptions>
-         </AirItinerary DirectionInd="Return">
-        </PricedItinerary SequenceNumber="1" MultipleTickets="false">
+          <AirItinerary DirectionInd="Return">
+            <OriginDestinationOptions>
+               <FlightSegment></FlightSegment>
+               <FlightSegment></FlightSegment>
+            </OriginDestinationOptions>
+            <OriginDestinationOptions>
+               <FlightSegment></FlightSegment>
+               <FlightSegment></FlightSegment>
+            </OriginDestinationOptions>
+          </AirItinerary>
+          <AirItineraryPricingInfo>
+            <ItinTotalFare>
+              <BaseFare Amount="2.00" CurrencyCode="EUR"/>
+              <EquivFare Amount="85" CurrencyCode="RUB"/>
+              <Taxes>
+                <Tax TaxCode="TOTALTAX" Amount="8164" CurrencyCode="RUB"/>
+              </Taxes>
+              <TotalFare Amount="8249" CurrencyCode="RUB"/>
+            </ItinTotalFare>
+          </AirItineraryPricingInfo>
+        </PricedItinerary>
 
         <Person>
             <FullName>Grace R. Emlin</FullName>
@@ -60,10 +89,6 @@ func main() {
         fmt.Printf("error: %v", err)
         return
     }
-    fmt.Printf("XMLName: %#v\n", v.XMLName)
-    fmt.Printf("Name: %q\n", v.Name)
-    fmt.Printf("Phone: %q\n", v.Phone)
-    fmt.Printf("Email: %v\n", v.Email)
-    fmt.Printf("Groups: %v\n", v.Groups)
-    fmt.Printf("Address: %v\n", v.Address)
+    fmt.Printf("XMLName: %T(%+v)\n\n", v, v)
+    fmt.Printf("Price amount: %T(%+v)\n\n", v.Price, v.Price)
 }
