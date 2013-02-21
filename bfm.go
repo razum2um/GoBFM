@@ -1,15 +1,16 @@
 package main
 
 import (
-    "os"
     "fmt"
-    "flag"
     "time"
+    "net/http"
     "io/ioutil"
     "encoding/xml"
     "encoding/json"
-    "github.com/davecgh/go-spew/spew"
+    "github.com/dpapathanasiou/go-api"
 )
+
+// import "github.com/davecgh/go-spew/spew"
 
 // XML types
 
@@ -144,28 +145,31 @@ type Response struct {
 
 // end of XML types
 
-var xmlFileName = flag.String("file", "bfm.xml", "Input file path")
-
-func main() {
-    flag.Parse()
+func bfm (w http.ResponseWriter, r *http.Request) string {
+    body, _ := ioutil.ReadAll(r.Body)
     v := Response{}
 
-    content, err := ioutil.ReadFile(*xmlFileName)
-    if err != nil {
-        fmt.Println("Error opening file: %v\n", err)
-        return
-    }
-
-    xerr := xml.Unmarshal([]byte(content), &v)
+    xerr := xml.Unmarshal([]byte(body), &v)
     if xerr != nil {
-        fmt.Printf("Error parsing file: %v\n", err)
-        return
+        fmt.Println("cannot parse: ", string(body))
+        panic(xerr)
     }
-    spew.Dump(v.Itineraries[0])
+    //spew.Dump(v.Itineraries[0])
 
     json, jerr := json.Marshal(v.Itineraries)
     if jerr != nil {
-        fmt.Println("error:", err)
+        fmt.Println("cannot jsonify: ", v)
+        panic(jerr)
     }
-    os.Stdout.Write(json)
+    fmt.Println("http ok itins: ", len(v.Itineraries))
+    return string(json)
+}
+
+func main() {
+    handlers := map[string]func(http.ResponseWriter, *http.Request){}
+    handlers["/bfm/"] = func(w http.ResponseWriter, r *http.Request) {
+        api.Respond("application/json", "utf-8", bfm)(w, r)
+    }
+
+    api.NewServer(9000, api.DefaultServerReadTimeout, handlers)
 }
