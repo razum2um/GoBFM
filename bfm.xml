@@ -1,0 +1,310 @@
+
+<OTA_AirLowFareSearchRS Version="1.5.9" PricedItinCount="200" BrandedOneWayItinCount="0" SimpleOneWayItinCount="0" DepartedItinCount="0" SoldOutItinCount="0" AvailableItinCount="0">
+  <Success/>
+  <Warnings>
+    <Warning Type="SERVER" Code="TTFHLP627" MessageClass="I" ShortText="27035"/>
+    <Warning Type="DEFAULT" Code="RULEID" MessageClass="I" ShortText="13231"/>
+    <Warning Type="DRE" Code="RULEID" MessageClass="I" ShortText="12676"/>
+    <Warning Type="WORKERTHREAD" Code="TRANSACTIONID" MessageClass="I" ShortText="134993598112316418"/>
+  </Warnings>
+  <PricedItineraries>
+    <PricedItinerary SequenceNumber="1">
+      <AirItinerary DirectionInd="Return">
+        <OriginDestinationOptions>
+          <OriginDestinationOption>
+            <FlightSegment DepartureDateTime="2013-03-10T17:25:00" ArrivalDateTime="2013-03-10T17:50:00" StopQuantity="0" FlightNumber="8395" ResBookDesigCode="W" ElapsedTime="205">
+              <DepartureAirport LocationCode="DME"/>
+              <ArrivalAirport LocationCode="DUS"/>
+              <OperatingAirline Code="AB" FlightNumber="8395"/>
+              <Equipment AirEquipType="320"/>
+              <MarketingAirline Code="AB"/>
+              <MarriageGrp>O</MarriageGrp>
+              <DepartureTimeZone GMTOffset="4"/>
+              <ArrivalTimeZone GMTOffset="1"/>
+              <TPA_Extensions>
+                <eTicket Ind="true"/>
+              </TPA_Extensions>
+            </FlightSegment>
+            <FlightSegment DepartureDateTime="2013-03-10T19:20:00" ArrivalDateTime="2013-03-10T19:40:00" StopQuantity="0" FlightNumber="8342" ResBookDesigCode="W" ElapsedTime="80">
+              <DepartureAirport LocationCode="DUS"/>
+              <ArrivalAirport LocationCode="STN"/>
+              <OperatingAirline Code="AB" FlightNumber="8342"/>
+              <Equipment AirEquipType="DH4"/>
+              <MarketingAirline Code="AB"/>
+              <MarriageGrp>I</MarriageGrp>
+              <DepartureTimeZone GMTOffset="1"/>
+              <ArrivalTimeZone GMTOffset="0"/>
+              <TPA_Extensions>
+                <eTicket Ind="true"/>
+              </TPA_Extensions>
+            </FlightSegment>
+          </OriginDestinationOption>
+          <OriginDestinationOption>
+            <FlightSegment DepartureDateTime="2013-03-18T07:25:00" ArrivalDateTime="2013-03-18T09:40:00" StopQuantity="0" FlightNumber="8893" ResBookDesigCode="W" ElapsedTime="75">
+              <DepartureAirport LocationCode="STN"/>
+              <ArrivalAirport LocationCode="DUS"/>
+              <OperatingAirline Code="AB" FlightNumber="8893"/>
+              <Equipment AirEquipType="DH4"/>
+              <MarketingAirline Code="AB"/>
+              <MarriageGrp>O</MarriageGrp>
+              <DepartureTimeZone GMTOffset="0"/>
+              <ArrivalTimeZone GMTOffset="1"/>
+              <TPA_Extensions>
+                <eTicket Ind="true"/>
+              </TPA_Extensions>
+            </FlightSegment>
+            <FlightSegment DepartureDateTime="2013-03-18T10:25:00" ArrivalDateTime="2013-03-18T16:40:00" StopQuantity="0" FlightNumber="8394" ResBookDesigCode="W" ElapsedTime="195">
+              <DepartureAirport LocationCode="DUS"/>
+              <ArrivalAirport LocationCode="DME"/>
+              <OperatingAirline Code="AB" FlightNumber="8394"/>
+              <Equipment AirEquipType="320"/>
+              <MarketingAirline Code="AB"/>
+              <MarriageGrp>I</MarriageGrp>
+              <DepartureTimeZone GMTOffset="1"/>
+              <ArrivalTimeZone GMTOffset="4"/>
+              <TPA_Extensions>
+                <eTicket Ind="true"/>
+              </TPA_Extensions>
+            </FlightSegment>
+          </OriginDestinationOption>
+        </OriginDestinationOptions>
+      </AirItinerary>
+      <AirItineraryPricingInfo PricingSource="JRI4" LastTicketDate="2012-10-14">
+        <ItinTotalFare>
+          <BaseFare Amount="2.00" CurrencyCode="EUR" DecimalPlaces="2"/>
+          <EquivFare Amount="85" CurrencyCode="RUB" DecimalPlaces="0"/>
+          <Taxes>
+            <Tax TaxCode="TOTALTAX" Amount="8164" CurrencyCode="RUB" DecimalPlaces="0"/>
+          </Taxes>
+          <TotalFare Amount="8249" CurrencyCode="RUB" DecimalPlaces="0"/>
+        </ItinTotalFare>
+        <PTC_FareBreakdowns>
+          <PTC_FareBreakdown>
+            <PassengerTypeQuantity Code="ADT" Quantity="1"/>
+            <FareBasisCodes>
+              <FareBasisCode BookingCode="W" DepartureAirportCode="DME" ArrivalAirportCode="DUS">WNC33RT</FareBasisCode>
+              <FareBasisCode BookingCode="W" DepartureAirportCode="DUS" ArrivalAirportCode="STN">WNC33RT</FareBasisCode>
+              <FareBasisCode BookingCode="W" DepartureAirportCode="STN" ArrivalAirportCode="DUS">WNC33RT</FareBasisCode>
+              <FareBasisCode BookingCode="W" DepartureAirportCode="DUS" ArrivalAirportCode="DME">WNC33RT</FareBasisCode>
+            </FareBasisCodes>
+            <PassengerFare>
+              <BaseFare Amount="2.00" CurrencyCode="EUR"/>
+              <EquivFare Amount="85" CurrencyCode="RUB" DecimalPlaces="0"/>
+              <Taxes>
+                <Tax TaxCode="YQF" Amount="1337" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="YQF" Amount="1337" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="YQF" Amount="1337" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="YQF" Amount="1337" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="RI" Amount="265" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="RI" Amount="265" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="UH" Amount="199" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="DE2" Amount="162" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="RA1" Amount="391" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="RA1" Amount="391" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="GB6" Amount="650" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="UB9" Amount="493" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <TotalTax Amount="8164" CurrencyCode="RUB" DecimalPlaces="0"/>
+              </Taxes>
+              <TotalFare Amount="8249" CurrencyCode="RUB"/>
+            </PassengerFare>
+            <Endorsements NonRefundableIndicator="true"/>
+            <TPA_Extensions>
+              <FareCalcLine Info="MOW AB X/DUS AB LON M1.26AB X/DUS AB MOW M1.26NUC2.52END ROE0.790327"/>
+            </TPA_Extensions>
+          </PTC_FareBreakdown>
+        </PTC_FareBreakdowns>
+        <FareInfos>
+          <FareInfo>
+            <FareReference>W</FareReference>
+            <TPA_Extensions>
+              <SeatsRemaining Number="6" BelowMin="false"/>
+              <Cabin Cabin="Y"/>
+              <Meal Code="S"/>
+            </TPA_Extensions>
+          </FareInfo>
+          <FareInfo>
+            <FareReference>W</FareReference>
+            <TPA_Extensions>
+              <SeatsRemaining Number="6" BelowMin="false"/>
+              <Cabin Cabin="Y"/>
+              <Meal Code="S"/>
+            </TPA_Extensions>
+          </FareInfo>
+          <FareInfo>
+            <FareReference>W</FareReference>
+            <TPA_Extensions>
+              <SeatsRemaining Number="9" BelowMin="false"/>
+              <Cabin Cabin="Y"/>
+              <Meal Code="S"/>
+            </TPA_Extensions>
+          </FareInfo>
+          <FareInfo>
+            <FareReference>W</FareReference>
+            <TPA_Extensions>
+              <SeatsRemaining Number="9" BelowMin="false"/>
+              <Cabin Cabin="Y"/>
+              <Meal Code="S"/>
+            </TPA_Extensions>
+          </FareInfo>
+        </FareInfos>
+        <TPA_Extensions>
+          <DivideInParty Indicator="false"/>
+        </TPA_Extensions>
+      </AirItineraryPricingInfo>
+      <TicketingInfo TicketType="eTicket" ValidInterline="Yes"/>
+      <TPA_Extensions>
+        <ValidatingCarrier Code="AB"/>
+      </TPA_Extensions>
+    </PricedItinerary>
+    <PricedItinerary SequenceNumber="2">
+      <AirItinerary DirectionInd="Return">
+        <OriginDestinationOptions>
+          <OriginDestinationOption>
+            <FlightSegment DepartureDateTime="2013-03-10T13:55:00" ArrivalDateTime="2013-03-10T13:40:00" StopQuantity="0" FlightNumber="419" ResBookDesigCode="U" ElapsedTime="105">
+              <DepartureAirport LocationCode="DME"/>
+              <ArrivalAirport LocationCode="RIX"/>
+              <OperatingAirline Code="BT" FlightNumber="419"/>
+              <Equipment AirEquipType="73C"/>
+              <MarketingAirline Code="BT"/>
+              <MarriageGrp>O</MarriageGrp>
+              <DepartureTimeZone GMTOffset="4"/>
+              <ArrivalTimeZone GMTOffset="2"/>
+              <TPA_Extensions>
+                <eTicket Ind="true"/>
+              </TPA_Extensions>
+            </FlightSegment>
+            <FlightSegment DepartureDateTime="2013-03-10T15:20:00" ArrivalDateTime="2013-03-10T16:10:00" StopQuantity="0" FlightNumber="653" ResBookDesigCode="U" ElapsedTime="170">
+              <DepartureAirport LocationCode="RIX"/>
+              <ArrivalAirport LocationCode="LGW"/>
+              <OperatingAirline Code="BT" FlightNumber="653"/>
+              <Equipment AirEquipType="73C"/>
+              <MarketingAirline Code="BT"/>
+              <MarriageGrp>I</MarriageGrp>
+              <DepartureTimeZone GMTOffset="2"/>
+              <ArrivalTimeZone GMTOffset="0"/>
+              <TPA_Extensions>
+                <eTicket Ind="true"/>
+              </TPA_Extensions>
+            </FlightSegment>
+          </OriginDestinationOption>
+          <OriginDestinationOption>
+            <FlightSegment DepartureDateTime="2013-03-18T10:50:00" ArrivalDateTime="2013-03-18T15:30:00" StopQuantity="0" FlightNumber="652" ResBookDesigCode="U" ElapsedTime="160">
+              <DepartureAirport LocationCode="LGW"/>
+              <ArrivalAirport LocationCode="RIX"/>
+              <OperatingAirline Code="BT" FlightNumber="652"/>
+              <Equipment AirEquipType="73C"/>
+              <MarketingAirline Code="BT"/>
+              <MarriageGrp>O</MarriageGrp>
+              <DepartureTimeZone GMTOffset="0"/>
+              <ArrivalTimeZone GMTOffset="2"/>
+              <TPA_Extensions>
+                <eTicket Ind="true"/>
+              </TPA_Extensions>
+            </FlightSegment>
+            <FlightSegment DepartureDateTime="2013-03-18T17:05:00" ArrivalDateTime="2013-03-18T20:40:00" StopQuantity="0" FlightNumber="422" ResBookDesigCode="U" ElapsedTime="95">
+              <DepartureAirport LocationCode="RIX"/>
+              <ArrivalAirport LocationCode="SVO"/>
+              <OperatingAirline Code="BT" FlightNumber="422"/>
+              <Equipment AirEquipType="73C"/>
+              <MarketingAirline Code="BT"/>
+              <MarriageGrp>I</MarriageGrp>
+              <DepartureTimeZone GMTOffset="2"/>
+              <ArrivalTimeZone GMTOffset="4"/>
+              <TPA_Extensions>
+                <eTicket Ind="true"/>
+              </TPA_Extensions>
+            </FlightSegment>
+          </OriginDestinationOption>
+        </OriginDestinationOptions>
+      </AirItinerary>
+      <AirItineraryPricingInfo PricingSource="JRI4" LastTicketDate="2012-10-13">
+        <ItinTotalFare>
+          <BaseFare Amount="92.00" CurrencyCode="EUR" DecimalPlaces="2"/>
+          <EquivFare Amount="3730" CurrencyCode="RUB" DecimalPlaces="0"/>
+          <Taxes>
+            <Tax TaxCode="TOTALTAX" Amount="4864" CurrencyCode="RUB" DecimalPlaces="0"/>
+          </Taxes>
+          <TotalFare Amount="8594" CurrencyCode="RUB" DecimalPlaces="0"/>
+        </ItinTotalFare>
+        <PTC_FareBreakdowns>
+          <PTC_FareBreakdown>
+            <PassengerTypeQuantity Code="ADT" Quantity="1"/>
+            <FareBasisCodes>
+              <FareBasisCode BookingCode="U" DepartureAirportCode="DME" ArrivalAirportCode="RIX">URUTH3</FareBasisCode>
+              <FareBasisCode BookingCode="U" DepartureAirportCode="RIX" ArrivalAirportCode="LGW">URUTH3</FareBasisCode>
+              <FareBasisCode BookingCode="U" DepartureAirportCode="LGW" ArrivalAirportCode="RIX">URUTH3</FareBasisCode>
+              <FareBasisCode BookingCode="U" DepartureAirportCode="RIX" ArrivalAirportCode="SVO">URUTH3</FareBasisCode>
+            </FareBasisCodes>
+            <PassengerFare>
+              <BaseFare Amount="92.00" CurrencyCode="EUR"/>
+              <EquivFare Amount="3730" CurrencyCode="RUB" DecimalPlaces="0"/>
+              <Taxes>
+                <Tax TaxCode="YQF" Amount="689" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="YQF" Amount="689" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="YQF" Amount="689" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="YQF" Amount="689" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="RI" Amount="300" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="RI" Amount="265" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="UH" Amount="199" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="LV" Amount="12" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="LV" Amount="12" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="OH" Amount="41" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="OH" Amount="41" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="GB6" Amount="650" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <Tax TaxCode="UB6" Amount="588" CurrencyCode="RUB" DecimalPlaces="0"/>
+                <TotalTax Amount="4864" CurrencyCode="RUB" DecimalPlaces="0"/>
+              </Taxes>
+              <TotalFare Amount="8594" CurrencyCode="RUB"/>
+            </PassengerFare>
+            <Endorsements NonRefundableIndicator="true"/>
+            <TPA_Extensions>
+              <FareCalcLine Info="MOW BT X/RIX BT LON58.20BT X/RIX BT MOW58.20NUC116.40END ROE0.790327"/>
+            </TPA_Extensions>
+          </PTC_FareBreakdown>
+        </PTC_FareBreakdowns>
+        <FareInfos>
+          <FareInfo>
+            <FareReference>U</FareReference>
+            <TPA_Extensions>
+              <SeatsRemaining Number="9" BelowMin="false"/>
+              <Cabin Cabin="Y"/>
+              <Meal Code="G"/>
+            </TPA_Extensions>
+          </FareInfo>
+          <FareInfo>
+            <FareReference>U</FareReference>
+            <TPA_Extensions>
+              <SeatsRemaining Number="9" BelowMin="false"/>
+              <Cabin Cabin="Y"/>
+              <Meal Code="G"/>
+            </TPA_Extensions>
+          </FareInfo>
+          <FareInfo>
+            <FareReference>U</FareReference>
+            <TPA_Extensions>
+              <SeatsRemaining Number="9" BelowMin="false"/>
+              <Cabin Cabin="Y"/>
+              <Meal Code="G"/>
+            </TPA_Extensions>
+          </FareInfo>
+          <FareInfo>
+            <FareReference>U</FareReference>
+            <TPA_Extensions>
+              <SeatsRemaining Number="9" BelowMin="false"/>
+              <Cabin Cabin="Y"/>
+              <Meal Code="G"/>
+            </TPA_Extensions>
+          </FareInfo>
+        </FareInfos>
+        <TPA_Extensions>
+          <DivideInParty Indicator="false"/>
+        </TPA_Extensions>
+      </AirItineraryPricingInfo>
+      <TicketingInfo TicketType="eTicket" ValidInterline="Yes"/>
+      <TPA_Extensions>
+        <ValidatingCarrier Code="BT"/>
+      </TPA_Extensions>
+    </PricedItinerary>
+  </PricedItineraries>
+  <TPA_Extensions/>
+</OTA_AirLowFareSearchRS>
