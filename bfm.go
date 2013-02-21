@@ -6,6 +6,7 @@ import (
     "time"
     "io/ioutil"
     "encoding/xml"
+    "encoding/json"
     "github.com/davecgh/go-spew/spew"
 )
 
@@ -79,7 +80,7 @@ type Response struct {
 
 // end of XML types
 
-var xmlFileName = flag.String("file", "bfm200.xml", "Input file path")
+var xmlFileName = flag.String("file", "bfm.xml", "Input file path")
 
 func main() {
     flag.Parse()
@@ -91,10 +92,18 @@ func main() {
         return
     }
 
-    err = xml.Unmarshal([]byte(content), &v)
-    if err != nil {
+    xerr := xml.Unmarshal([]byte(content), &v)
+    if xerr != nil {
         fmt.Printf("Error parsing file: %v\n", err)
         return
     }
     spew.Dump(v)
+
+    t := v.Itineraries[0].PricingInfo.Price.Amount
+    fmt.Println("XMLName %v", t)
+    json, jerr := json.Marshal(t)
+    if jerr != nil {
+        fmt.Println("error:", err)
+    }
+    fmt.Println(json)
 }
