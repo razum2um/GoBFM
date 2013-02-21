@@ -3,6 +3,7 @@ package main
 import (
     "fmt"
     "encoding/xml"
+    "github.com/davecgh/go-spew/spew"
 )
 
 type Email struct {
@@ -89,6 +90,5 @@ func main() {
         fmt.Printf("error: %v", err)
         return
     }
-    fmt.Printf("XMLName: %T(%+v)\n\n", v, v)
-    fmt.Printf("Price amount: %T(%+v)\n\n", v.Price, v.Price)
+    spew.Dump(v)
 }
