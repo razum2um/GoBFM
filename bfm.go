@@ -8,9 +8,12 @@ import (
     "encoding/xml"
     "encoding/json"
     "github.com/dpapathanasiou/go-api"
+    "github.com/davecgh/go-spew/spew"
 )
 
-// import "github.com/davecgh/go-spew/spew"
+
+var _ = ioutil.ReadAll
+var _ = spew.Dump
 
 // XML types
 
@@ -145,23 +148,47 @@ type Response struct {
 
 // end of XML types
 
+
 func bfm (w http.ResponseWriter, r *http.Request) string {
-    body, _ := ioutil.ReadAll(r.Body)
+    //body, _ := ioutil.ReadAll(r.Body)
     v := Response{}
 
-    xerr := xml.Unmarshal([]byte(body), &v)
-    if xerr != nil {
-        fmt.Println("cannot parse: ", string(body))
-        panic(xerr)
-    }
+    //xerr := xml.Unmarshal([]byte(body), &v)
+    //xerr := xml.Unmarshal([]byte(body), &v)
+    //if xerr != nil {
+    //    fmt.Println("cannot parse: ", string(body))
+    //    panic(xerr)
+    //}
     //spew.Dump(v.Itineraries[0])
 
-    json, jerr := json.Marshal(v.Itineraries)
+    decoder := xml.NewDecoder(r.Body)
+    var itins = make([]BfmItinerary, 0)
+    for {
+        t, _ := decoder.Token()
+        if t == nil {
+            break
+        }
+        switch se := t.(type) {
+        case xml.StartElement:
+            inElement := se.Name.Local
+            //fmt.Println("inElement: ", inElement)
+            if inElement == "PricedItinerary" {
+                var itin BfmItinerary
+                decoder.DecodeElement(&itin, &se)
+                itins = append(itins, itin)
+            }
+        default:
+        }
+    }
+
+    //spew.Dump(len(itins))
+
+    json, jerr := json.Marshal(&itins)
     if jerr != nil {
         fmt.Println("cannot jsonify: ", v)
         panic(jerr)
     }
-    fmt.Println("http ok itins: ", len(v.Itineraries))
+    fmt.Println("http ok itins: ", len(itins))
     return string(json)
 }
 
@@ -171,5 +198,6 @@ func main() {
         api.Respond("application/json", "utf-8", bfm)(w, r)
     }
 
+    fmt.Print("Starting webserver on: http://127.0.0.1:9000\n")
     api.NewServer(9000, api.DefaultServerReadTimeout, handlers)
 }
